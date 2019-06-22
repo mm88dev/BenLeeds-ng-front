@@ -1,0 +1,9 @@
+img {
+  height: 2.5em;
+  width: 14em;
+}
+
+.card-body {
+  background-color: #c9d1dd;
+  box-shadow: 10px 10px 8px #888888;
+}

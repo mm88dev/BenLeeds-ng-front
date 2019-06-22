@@ -1,0 +1,180 @@
+<app-admin-navbar></app-admin-navbar>
+
+<div class="container border pb-2">
+  <div class="mt-3">
+    <h3 class="text-center display-4">Work Order</h3>
+
+    <table
+      class="table-bordered table table-striped table-responsive-sm table-hover"
+    >
+      <thead>
+        <tr class="text-center">
+          <th>Building</th>
+          <th>Apartment</th>
+          <th>Room</th>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Vendors</th>
+          <th>End Date</th>
+          <th>Comment</th>
+          <th>Send</th>
+        </tr>
+      </thead>
+      <tbody class="align-middle" *ngIf="!isLoading">
+        <tr class="text-center" *ngFor="let job of workorder.jobs">
+          <td>
+            {{ job.building | titlecase }}
+          </td>
+          <td>
+            {{ job.apartment | titlecase }}
+          </td>
+          <td>
+            {{ job.room | titlecase }}
+          </td>
+          <td>
+            {{ job.name | titlecase }}
+          </td>
+          <td>
+            {{ job.quantity ? job.quantity : '1' }}
+          </td>
+          <td>
+            {{ job.price | currency }}
+          </td>
+          <td>
+            <button
+              *ngIf="job.status != 'sent'"
+              class="btn btn-primary btn-sm mb-1"
+              data-toggle="modal"
+              data-target="#vendorModal"
+              (click)="onShowSchedule(selectedVendor.value)"
+            >
+              Show Schedule
+            </button>
+            <select
+              [disabled]="job.status == 'sent'"
+              class="form-control-sm"
+              #selectedVendor
+            >
+              <option
+                *ngFor="let vendor of vendors"
+                [value]="
+                  job.status == 'sent' ? job.vendor.firstName : vendor.firstName
+                "
+                >{{
+                  job.status == 'sent' ? job.vendor.firstName : vendor.firstName
+                }}
+                {{
+                  job.status == 'sent' ? job.vendor.lastName : vendor.lastName
+                }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <input
+              [disabled]="job.status == 'sent'"
+              [value]="(job.endDate | date) || 'Pick date'"
+              onfocus="(this.type='date')"
+              class="form-control-sm"
+              #endDate
+            />
+          </td>
+          <td>
+            <textarea
+              [value]="job.adminComment || ''"
+              [disabled]="job.status == 'sent'"
+              rows="2"
+              #adminComment
+            ></textarea>
+          </td>
+          <td *ngIf="job.status != 'sent'">
+            <button
+              class="btn btn-outline-success form-control"
+              (click)="
+                onSend(
+                  job,
+                  selectedVendor.value,
+                  endDate.value,
+                  adminComment.value
+                )
+              "
+            >
+              Send
+            </button>
+          </td>
+          <td *ngIf="job.status == 'sent'">
+            <button
+              class="btn btn-outline-danger form-control"
+              (click)="onChange(job)"
+            >
+              Change
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row" *ngIf="!isLoading">
+    <div class="col-6">
+      <div class="row">
+        <div class="col-6 text-right">Region:</div>
+        <div class="col-4">{{ workorder.user.region | titlecase }}</div>
+      </div>
+      <div class="row">
+        <div class="col-6 text-right">Manager:</div>
+        <div class="col-4">
+          {{ workorder.user.firstName | titlecase }}
+          {{ workorder.user.lastName | titlecase }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 text-right">Building:</div>
+        <div class="col-4">{{ workorder.building }}</div>
+      </div>
+      <div class="row">
+        <div class="col-6 text-right">Apartment:</div>
+        <div class="col-4">{{ workorder.apartment }}</div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="row">
+        <div class="col-6 text-right">Start Date:</div>
+        <div class="col-4">{{ workorder.submitDate | date: 'medium' }}</div>
+      </div>
+      <div class="row">
+        <div class="col-6 text-right">Completed Date:</div>
+        <div class="col-4">{{ workorder.finishDate | date: 'medium' }}</div>
+      </div>
+      <div class="row">
+        <div class="col-6 text-right">Sent Date:</div>
+        <div class="col-4">{{ workorder.sendDate | date: 'medium' }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="text-center mt-5">
+    <div class="spinner-grow text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-secondary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-danger" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-warning" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-info" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-light" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+</div>
+
+<app-modal-vendor></app-modal-vendor>

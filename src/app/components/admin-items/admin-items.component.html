@@ -1,0 +1,238 @@
+<app-admin-navbar></app-admin-navbar>
+
+<div class="container">
+  <div class="mx-auto text-center">
+    <h1 class="lead display-4">Items</h1>
+  </div>
+  <div class="column mt-2">
+    <div class="col-sm-4 mx-auto">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <div class="input-group-text bg-dark text-white">
+            Choose: 
+          </div>
+        </div>
+        <select
+          id="internal-select-picker"
+          class="form-control"
+          name="actionInput"
+          #actionInput
+          ngModel="actionInput"
+          [disabled]="showTable"
+          (click)="showForm?false:true"
+        >
+          <option value="get">Show all items</option>
+          <option value="post">Create new item</option>
+          <option value="editDelete">Edit/delete item</option>
+        </select>
+      </div>
+    </div>
+    <div
+      *ngIf="
+        !showTable &&
+        (actionInput.value == 'get' ||
+          actionInput.value == 'post' ||
+          actionInput.value == 'editDelete')
+      "
+    >
+      <div class="col-sm-4 mx-auto">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text bg-dark text-white">
+              Rooms:
+            </div>
+          </div>
+          <select
+            id="internal-select-picker"
+            class="form-control"
+            name="roomInput"
+            #roomInput
+            ngModel="roomInput"
+            (click)="onRoom(roomInput.value)"
+          >
+            <option *ngFor="let room of rooms" [value]="room.name">{{
+              room.name | titlecase
+            }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-4 mx-auto" *ngIf="actionInput.value != 'post'">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <div class="input-group-text bg-dark text-white">
+              Items:
+            </div>
+          </div>
+          <select
+            id="internal-select-picker"
+            class="form-control"
+            name="itemInput"
+            ngModel="itemInput"
+            #itemInput
+            (click)="onItem(itemInput.value)"
+          >
+            <option *ngFor="let item of items" [value]="item.name">{{
+              item.name | titlecase
+            }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <button
+        *ngIf="
+          !showTable &&
+          (actionInput.value == 'get' || actionInput.value == 'editDelete')
+        "
+        type="submit"
+        (click)="onSelect(actionInput.value, roomInput, itemInput)"
+        class="btn btn-primary mx-3"
+      >
+        Submit
+      </button>
+      <button
+        *ngIf="!showTable && actionInput.value == 'post'"
+        type="submit"
+        (click)="onPostSelect(roomInput)"
+        class="btn btn-primary mx-3"
+      >
+        Submit
+      </button>
+      <button
+        *ngIf="showTable"
+        type="submit"
+        (click)="onBack()"
+        class="btn btn-secondary"
+      >
+        <- Back
+      </button>
+    </div>
+
+    <table
+      *ngIf="showTable"
+      class="mt-2 table-bordered table table-striped table-responsive-sm table-hover"
+    >
+      <thead>
+        <tr class="text-left">
+          <th>Item</th>
+          <th>SubCat</th>
+          <th>Room</th>
+          <th>Price ($)</th>
+          <th *ngIf="actionInput.value == 'post'">Add New</th>
+          <th *ngIf="actionInput.value == 'editDelete'">Edit Item</th>
+          <th *ngIf="actionInput.value == 'editDelete'">Delete Item</th>
+        </tr>
+      </thead>
+
+      <tbody *ngFor="let item of items" >
+        <!-- GET ITEMS -->
+        <tr *ngIf="actionInput.value == 'get'"  class="text-left">
+          <td>
+            {{ item.name | titlecase }}
+          </td>
+          <td>
+            {{ item.subcat | titlecase }}
+          </td>
+          <td>
+            {{ item.room | titlecase }}
+          </td>
+          <td>
+            {{ item.price | currency }}
+          </td>
+        </tr>
+        <!-- POST ITEM -->
+        <tr *ngIf="actionInput.value == 'post'"  class="text-left">
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter item name"
+              name="postName"
+              #postName
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter sub category"
+              #postSubcat
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              disabled
+              placeholder="Enter room name"
+              [value]="item.room | titlecase"
+              #postRoom
+            />
+          </td>
+          <td >
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter item price"
+              #postPrice
+            />
+          </td>
+          <td>
+            <button
+              class="btn btn-outline-success form-control"
+              (click)="onPostSave(postName.value, postSubcat.value, postRoom.value, postPrice.value)"
+            >
+              Save
+            </button>
+          </td>
+          </tr>
+        <!-- EDIT/DELETE -->
+        <tr *ngIf="actionInput.value == 'editDelete'" class="text-left">
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter item name"
+              [value]="item.name | titlecase"
+              #editDeleteName
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter subtitle category"
+              [value]="item.subcat | titlecase"
+              #editDeleteSubcat
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter room name"
+              [value]="item.room | titlecase"
+              disabled
+              #editDeleteRoom
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter item price"
+              [value]="item.price"
+              #editDeletePrice
+            />
+          </td>
+          <td>
+            <button class="btn btn-outline-dark form-control" (click)="onEdit(editDeleteName.value, editDeleteSubcat.value, editDeletePrice.value, item.id)">Edit</button>
+          </td>
+          <td>
+            <button class="btn btn-outline-danger form-control" (click)="onDelete(editDeleteName.value, editDeleteRoom.value, item.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

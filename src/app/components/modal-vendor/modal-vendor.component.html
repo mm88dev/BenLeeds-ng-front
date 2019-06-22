@@ -1,0 +1,98 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="vendorModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="vendorModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="vendorModalLabel" *ngIf="!isLoading">
+          Vendor -> {{ vendor.firstName }} {{ vendor.lastName }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          [routerLink]="['/admin/workorder/' + workorderId]"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table
+          class="table-bordered table table-striped table-responsive-sm table-hover"
+        >
+          <thead>
+            <tr class="text-left">
+              <th>Status</th>
+              <th>Date</th>
+              <th>Job</th>
+              <th>SubCat</th>
+              <th>Comment</th>
+            </tr>
+          </thead>
+            <tr *ngIf="isLoading">
+              <td colspan="5">
+                <div class="text-center mt-5">
+                  <div class="spinner-grow text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-secondary" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-success" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-danger" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-warning" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-info" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-light" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <tbody class="align-middle" *ngIf="!isLoading">
+            <tr *ngIf="vendor.jobs == ''">
+              <td colspan="5" class="text-center">
+                This user has no workorder yet.
+              </td>
+            </tr>
+            <tr class="text-left linkRow" *ngFor="let job of vendor.jobs">
+              <td>
+                {{ job.status }}
+              </td>
+              <td>
+                {{ job.endDate | date }}
+              </td>
+              <td>{{ job.name }}</td>
+              <td>{{ job.subcat }}</td>
+              <td>{{ job.adminComment }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button
+          [routerLink]="['/admin/workorder/' + workorderId]"
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

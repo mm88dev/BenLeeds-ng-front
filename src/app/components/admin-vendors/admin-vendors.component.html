@@ -1,0 +1,220 @@
+<app-admin-navbar></app-admin-navbar>
+
+<div class="container pb-2">
+  <div class="mt-3">
+    <h3 class="text-center display-4">Vendors</h3>
+
+    <table
+      class="table-bordered table table-striped table-responsive-sm table-hover"
+    >
+      <thead>
+        <tr class="text-left">
+          <th><span *ngIf="!showNewVendor">Work</span></th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>E-mail</th>
+          <th>Category</th>
+          <th>Calendar</th>
+          <th><span *ngIf="!showNewVendor">Edit</span></th>
+          <th><span *ngIf="!showNewVendor">Delete</span></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!isLoading" class="align-middle">
+        <tr class="text-left" *ngFor="let vendor of vendors">
+          <th class="">
+            <button
+              *ngIf="!showNewVendor && vendor._id != editVendorId"
+              class="btn btn-outline-primary form-control-sm"
+              [routerLink]="['/admin/vendors/' + vendor._id]"
+            >
+              Show
+            </button>
+          </th>
+          <td *ngIf="vendor._id != editVendorId" class="">
+            {{ vendor.firstName | titlecase }}
+          </td>
+          <th *ngIf="vendor._id == editVendorId" class="">
+            <input
+              type="text"
+              [(ngModel)]="editFirstName"
+              [placeholder]="vendor.firstName"
+              class="form-control"
+            />
+          </th>
+          <td *ngIf="vendor._id != editVendorId" class="">
+            {{ vendor.lastName | titlecase }}
+          </td>
+          <td *ngIf="vendor._id == editVendorId" class="">
+            <input
+              type="text"
+              class="form-control"
+              [placeholder]="vendor.lastName"
+              [(ngModel)]="editLastName"
+            />
+          </td>
+          <td *ngIf="vendor._id != editVendorId" class="">
+            {{ vendor.email }}
+          </td>
+          <td *ngIf="vendor._id == editVendorId" class="">
+            <input
+              type="email"
+              class="form-control"
+              [(ngModel)]="editEmail"
+              [placeholder]="vendor.email"
+            />
+          </td>
+          <td *ngIf="vendor._id != editVendorId" class="">
+            {{ vendor.category }}
+          </td>
+          <td *ngIf="vendor._id == editVendorId" class="">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="editCategory"
+              [placeholder]="vendor.category"
+            />
+          </td>
+          <td class="">
+            <button class="btn btn-dark">Show</button>
+          </td>
+
+          <td class="" *ngIf="vendor._id != editVendorId">
+            <button
+              *ngIf="!showNewVendor"
+              class="btn btn-outline-success form-control-sm"
+              (click)="onEdit(vendor)"
+            >
+              Edit
+            </button>
+          </td>
+          <td class="" *ngIf="vendor._id != editVendorId">
+            <button
+              *ngIf="!showNewVendor"
+              class="btn btn-danger form-control-sm"
+              (click)="onDelete(vendor)"
+            >
+              Delete
+            </button>
+          </td>
+          <td class="" *ngIf="vendor._id == editVendorId">
+            <button class="btn btn-light form-control" (click)="onEditCancel()">
+              Cancel
+            </button>
+          </td>
+          <td class="" *ngIf="vendor._id == editVendorId">
+            <button
+              class="btn btn-primary form-control"
+              (click)="
+                onEditSave(
+                  vendor,
+                  editFirstName,
+                  editLastName,
+                  editEmail,
+                  editCategory
+                )
+              "
+            >
+              Save
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="showNewVendor" class="text-left border-danger">
+          <td class="">New:</td>
+          <td class="">
+            <input
+              #newFirstName
+              type="text"
+              class="form-control"
+              placeholder="First Name"
+            />
+          </td>
+          <td class="">
+            <input
+              #newLastName
+              type="text"
+              class="form-control"
+              placeholder="Last Name"
+            />
+          </td>
+          <td class="">
+            <input
+              #newEmail
+              type="email"
+              class="form-control"
+              placeholder="E-mail"
+            />
+          </td>
+          <td class="">
+            <input
+              #newCategory
+              type="text"
+              class="form-control"
+              placeholder="Category"
+            />
+          </td>
+          <td class=""></td>
+          <td class="">
+            <button class="btn btn-light form-control" (click)="onCancel()">
+              Cancel
+            </button>
+          </td>
+          <td class="">
+            <button
+              class="btn btn-primary form-control"
+              (click)="
+                onSave(
+                  newFirstName.value,
+                  newLastName.value,
+                  newEmail.value,
+                  newCategory.value
+                )
+              "
+            >
+              Save
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button
+      *ngIf="!showNewVendor!; isLoading"
+      class="btn btn-info float-right mt-3"
+      (click)="onCreate()"
+    >
+      Create New Vendor
+    </button>
+
+    <div *ngIf="isLoading" class="text-center mt-5">
+      <div class="spinner-grow text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-secondary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-success" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-danger" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-warning" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-info" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-light" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <mat-paginator
+      *ngIf="vendors.length > 0"
+      class="mt-5"
+      [length]="totalVendors"
+      [pageSize]="vendorsPerPage"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="onChangePage($event)"
+    ></mat-paginator>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="mx-auto text-center mb-5">
+    <h1 class="lead display-4">Ben Leeds</h1>
+  </div>
+  <div class="column mt-5 ">
+    <div class="col-sm-8 offset-2">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <div class="input-group-text bg-dark text-white">
+            Building:
+          </div>
+        </div>
+        <select id="internal-select-picker" class="form-control" #buildingInput
+          >
+          <option *ngFor="let building of buildings" [value]="building.number">{{building.number}} -> {{ building.adress }} ({{building.zip}})</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-8 offset-2">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <div class="input-group-text bg-dark text-white">
+            Aptartment number:
+          </div>
+        </div>
+        <input type="number" min="1" id="internal-select-picker" class="form-control" #apartmentInput required placeholder="Enter apartment number"
+           />
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <button (click)="onSubmit(buildingInput.value, apartmentInput.value)" class="btn btn-primary  mx-3">Submit</button>
+  </div>
+</div>

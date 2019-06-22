@@ -1,0 +1,207 @@
+<app-admin-navbar></app-admin-navbar>
+
+<div class="container pb-2">
+  <div class="mt-3 border">
+    <h3 class="text-center display-4">Users</h3>
+
+    <table
+      class="table-bordered table table-striped table-responsive-sm table-hover"
+    >
+      <thead>
+        <tr class="text-left">
+          <th><span *ngIf="!showNewUser">Work</span></th>
+          <th>Name</th>
+          <th>E-mail</th>
+          <th>Password</th>
+          <th>Region</th>
+          <th><span *ngIf="!showNewUser">Edit</span></th>
+          <th><span *ngIf="!showNewUser">Delete</span></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!isLoading" class="align-middle">
+        <tr class="text-left" *ngFor="let user of users">
+          <td class="">
+            <button
+              *ngIf="!showNewUser && user._id != editUserId"
+              class="btn btn-outline-primary form-control-sm"
+              data-toggle="modal"
+              data-target="#workorderModal"
+              (click)="onShow(user)"
+            >
+              Show
+            </button>
+          </td>
+          <td *ngIf="user._id != editUserId" class="">
+            {{ user.name | titlecase }}
+          </td>
+          <td *ngIf="user._id == editUserId" class="">
+            <input
+              type="text"
+              [(ngModel)]="editName"
+              [placeholder]="user.name"
+              class="form-control"
+            />
+          </td>
+          <td *ngIf="user._id != editUserId" class="">
+            {{ user.email }}
+          </td>
+          <td *ngIf="user._id == editUserId" class="">
+            <input
+              type="email"
+              class="form-control"
+              [(ngModel)]="editEmail"
+              [placeholder]="user.email"
+            />
+          </td>
+          <td *ngIf="user._id != editUserId" class="">
+            {{ user.password }}
+          </td>
+          <td *ngIf="user._id == editUserId" class="">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="editPassword"
+              [placeholder]="user.password"
+            />
+          </td>
+          <td class="" *ngIf="user._id != editUserId">
+            {{ user.regionId }}
+          </td>
+          <th class="" *ngIf="user._id == editUserId">
+            <select [(ngModel)]="editRegionId" class="form-control-sm">
+              <option *ngFor="let region of regions" [value]="region">{{
+                region | titlecase
+              }}</option>
+            </select>
+          </th>
+          <th class="" *ngIf="user._id != editUserId">
+            <button
+              *ngIf="!showNewUser"
+              class="btn btn-outline-success form-control-sm"
+              (click)="onEdit(user)"
+            >
+              Edit
+            </button>
+          </th>
+          <th class="" *ngIf="user._id != editUserId">
+            <button
+              *ngIf="!showNewUser"
+              class="btn btn-danger form-control-sm"
+              (click)="onDelete(user)"
+            >
+              Delete
+            </button>
+          </th>
+          <th class="" *ngIf="user._id == editUserId">
+            <button class="btn btn-light form-control" (click)="onEditCancel()">
+              Cancel
+            </button>
+          </th>
+          <th class="" *ngIf="user._id == editUserId">
+            <button
+              class="btn btn-primary form-control"
+              (click)="
+                onEditSave(
+                  user,
+                  editName,
+                  editEmail,
+                  editPassword,
+                  editRegionId
+                )
+              "
+            >
+              Save
+            </button>
+          </th>
+        </tr>
+        <tr *ngIf="showNewUser" class="text-left border-danger">
+          <td class="font-weight-bold">New:</td>
+          <td class="">
+            <input
+              #newName
+              type="text"
+              class="form-control"
+              placeholder="Name"
+            />
+          </td>
+          <td class="">
+            <input
+              #newEmail
+              type="email"
+              class="form-control"
+              placeholder="E-mail"
+            />
+          </td>
+          <td>
+            <input #newPassword type="password" class="form-control" />
+          </td>
+          <td>
+            <input #newRegionId class="form-control-sm" placeholder="Region ID" />
+          </td>
+          <td class="font-weight-normal">
+            <button class="btn btn-light form-control" (click)="onCancel()">
+              Cancel
+            </button>
+          </td>
+          <td class="font-weight-normal">
+            <button
+              class="btn btn-primary form-control"
+              (click)="
+                onSave(
+                  newName.value,
+                  newEmail.value,
+                  newPassword.value,
+                  newRegionId.value
+                )
+              "
+            >
+              Save
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button
+      *ngIf="!showNewUser!; isLoading"
+      class="btn btn-info float-right mt-1 mr-3"
+      (click)="onCreate()"
+    >
+      Create New User
+    </button>
+
+    <div *ngIf="isLoading" class="text-center mt-5">
+      <div class="spinner-grow text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-secondary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-success" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-danger" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-warning" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-info" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-light" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <mat-paginator
+      *ngIf="users.length > 0"
+      class="mt-5"
+      [length]="totalUsers"
+      [pageSize]="usersPerPage"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="onChangePage($event)"
+    ></mat-paginator>
+  </div>
+</div>
+
+<app-modal-workorder></app-modal-workorder>

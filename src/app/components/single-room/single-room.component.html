@@ -1,0 +1,108 @@
+<app-rooms-header></app-rooms-header>
+
+<div class="container">
+  <div class="border mt-3">
+    <h3 class="text-center display-4">{{ enteredRoom.name | titlecase }}</h3>
+    <p *ngIf="items.length < 1 && !isLoading" class="text-center">
+      No items available
+    </p>
+    <div *ngIf="isLoading" class="text-center mt-5">
+      <div class="spinner-grow text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-secondary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-success" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-danger" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-warning" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-info" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-light" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+
+    <table
+      *ngIf="items.length >= 1 && !isLoading"
+      class="table-bordered table table-striped table-responsive-sm table-hover"
+    >
+      <thead>
+        <tr class="text-center">
+          <th>Item</th>
+          <th>SubCat</th>
+          <th>Price ($)</th>
+          <th>Quantity</th>
+          <th>Comment</th>
+          <th>Link</th>
+          <th>✓</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr
+          *ngFor="let item of items; trackBy: trackItem()"
+          class="text-center"
+        >
+          <td>{{ item.name }}</td>
+          <td>{{ item.subcat }}</td>
+          <td>{{ item.price | currency }}</td>
+          <td>
+            <input
+              type="text"
+              name="quantity"
+              placeholder="quantity"
+              class="form-control-sm"
+              #inputQuantity
+              value="{{ item.quantity }}"
+              [disabled]="item.status == 'fixing'"
+            />
+          </td>
+          <td>
+            <textarea
+              class="align-middle form-control"
+              rows="1"
+              #textareaComment
+              [disabled]="item.status == 'fixing'"
+              >{{ item.comment }}</textarea
+            >
+          </td>
+          <td><a href="">link</a></td>
+          <td class="text-center">
+            <div>
+              <input
+                class="form-control"
+                type="checkbox"
+                [checked]="item.status == 'fixing'"
+                #checkInput
+                (click)="
+                  onCheck(
+                    $event,
+                    item.id,
+                    inputQuantity.value,
+                    textareaComment.value
+                  )
+                "
+              />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <mat-paginator
+      *ngIf="items.length > 0"
+      class="mt-5"
+      [length]="totalItems"
+      [pageSize]="itemsPerPage"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="onChangePage($event)"
+    ></mat-paginator>
+  </div>
+</div>

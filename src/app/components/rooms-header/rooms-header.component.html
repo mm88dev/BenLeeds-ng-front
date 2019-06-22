@@ -1,0 +1,83 @@
+<div class="container">
+  <div class="mx-auto text-center">
+    <h1 class="lead display-4"><img src="assets/img/logo.png" alt="logo" /></h1>
+  </div>
+  <div *ngIf="isLoading" class="text-center mt-5">
+    <div class="spinner-grow text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-secondary" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-success" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-danger" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-warning" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-info" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-light" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div *ngIf="!isLoading" class="row my-4">
+    <div class="col-sm-4">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <div class="input-group-text bg-dark text-white">
+            Building Number:
+          </div>
+        </div>
+        <input
+          id="internal-select-picker"
+          class="form-control"
+          [value]="building"
+          disabled
+        />
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <div class="input-group-text bg-dark text-white">
+            Aptartment number:
+          </div>
+        </div>
+        <input
+          id="internal-select-picker"
+          class="form-control"
+          disabled
+          [value]="apartment"
+        />
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <div class="input-group-text bg-dark text-white">
+            Submit Time:
+          </div>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          disabled
+          [value]="submitDate | date: 'shortTime'"
+        />
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!isLoading" class="row justify-content-center">
+    <button (click)="onHome()" class="btn btn-primary mx-3">&#x2607; Home</button>
+    <button (click)="onFinish()" class="btn btn-success mx-3">Finish Work Order &#x2714;
+    </button>
+    <button (click)="onLogout()" class="btn btn-danger  mx-3">
+    &#x2716; Logout
+    </button>
+  </div>
+</div>
