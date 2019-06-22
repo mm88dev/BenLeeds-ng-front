@@ -21,7 +21,7 @@ export class UsersService {
   }
 
   getRegionId(email: string): string {
-    let user = this.users.find(user => {
+    const user = this.users.find(user => {
       return user.email === email;
     });
     return user.regionId;
@@ -29,10 +29,10 @@ export class UsersService {
 
   createUser(name: string, email: string, password: string, regionId: string) {
     const newUser: User = {
-      name: name,
-      email: email,
-      password: password,
-      regionId: regionId
+      name,
+      email,
+      password,
+      regionId
     };
     return this.http.post<{ message: string; user: any }>(
       environment.apiUrl + '/admin/user',
@@ -48,10 +48,10 @@ export class UsersService {
     regionId: string
   ) {
     const editUser: User = {
-      name: name,
-      email: email,
-      password: password,
-      regionId: regionId
+      name,
+      email,
+      password,
+      regionId
     };
     return this.http.post<{ message: string; user: any }>(
       environment.apiUrl + `/admin/user/${_id}`,

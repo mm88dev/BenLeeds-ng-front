@@ -27,7 +27,7 @@ export class AdminWorkorderComponent implements OnInit {
     this.isLoading = true;
     this.workordersService.getWorkorders(this.woPerPage, this.currentPage).subscribe(res => {
       this.workorder = res.workorders.find(workorder => {
-        return workorder._id == this.route.snapshot.params['workorderId'];
+        return workorder._id == this.route.snapshot.params.workorderId;
       });
       console.log(this.workorder);
     });
@@ -37,18 +37,18 @@ export class AdminWorkorderComponent implements OnInit {
     });
   }
   onSend(job, vendor, date, comment) {
-    let answer = confirm(
+    const answer = confirm(
       `Are you sure you want to send a job to vendor '${vendor || ''}'?`
     );
     if (answer) {
-      let submittedJob = this.workorder.jobs.find(j => {
+      const submittedJob = this.workorder.jobs.find(j => {
         return j._id == job._id;
       });
       submittedJob.status = 'sent';
       console.log(vendor);
       submittedJob.vendor.firstName = vendor;
 
-      let vendorId = this.vendors.find(vend => {
+      const vendorId = this.vendors.find(vend => {
         return vend.firstName == vendor;
       })._id;
 
@@ -58,14 +58,14 @@ export class AdminWorkorderComponent implements OnInit {
     }
   }
   onChange(job) {
-    let submittedJob = this.workorder.jobs.find(j => {
+    const submittedJob = this.workorder.jobs.find(j => {
       return j._id == job._id;
     });
     submittedJob.status = 'created';
   }
 
   onShowSchedule(selectedVendor) {
-    let chosenVendor = this.vendors.find(v => {
+    const chosenVendor = this.vendors.find(v => {
       return v.firstName == selectedVendor;
     });
     this.router.navigate([

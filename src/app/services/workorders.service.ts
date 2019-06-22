@@ -16,8 +16,8 @@ export class WorkordersService {
   }
   createWorkorder(building, apartment, user) {
     const data = {
-      building: building,
-      apartment: apartment,
+      building,
+      apartment,
       userId: user._id
     };
     return this.http.post<{ message: string; workorder: any }>(
@@ -28,7 +28,7 @@ export class WorkordersService {
   addJobsToWorkorder(id, building, apartment, items) {
     return this.http.post<{ message: string; jobs: any; workorder: any }>(
       environment.apiUrl + '/workorderJobs',
-      { id: id, building: building, apartment: apartment, items: items }
+      { id, building, apartment, items }
     );
   }
   addFinishDateToWorkorder(id) {

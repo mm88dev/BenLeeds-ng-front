@@ -27,7 +27,7 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    const authData = { email: email, password: password };
+    const authData = { email, password };
     this.http
       .post<{ message: string; user: User; token: string; expiresIn: number }>(
         environment.apiUrl + '/user/login',
@@ -100,7 +100,7 @@ export class AuthService {
       return;
     }
     return {
-      token: token,
+      token,
       expirationDate: new Date(expirationDate)
     };
   }

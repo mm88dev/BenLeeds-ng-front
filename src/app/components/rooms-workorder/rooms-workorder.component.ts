@@ -29,8 +29,8 @@ export class RoomsWorkorderComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.workorderId = this.route.snapshot.params['workorderId'];
-    this.userId = this.route.snapshot.params['userId'];
+    this.workorderId = this.route.snapshot.params.workorderId;
+    this.userId = this.route.snapshot.params.userId;
     this.itemsService.getItems().subscribe(res => {
       this.fixingItems = res.items.filter(item => {
         return item.status == 'fixing';
@@ -38,14 +38,14 @@ export class RoomsWorkorderComponent implements OnInit {
       console.log(this.fixingItems);
       this.sum = 0;
       for (let i = 0; i < this.fixingItems.length; i++) {
-        let totalPrice =
+        const totalPrice =
           (this.fixingItems[i].quantity || 1) * this.fixingItems[i].price;
         console.log(this.sum);
         this.sum += totalPrice;
       }
     });
     this.workordersService.getWorkorders(this.woPerPage, this.currentPage).subscribe(res => {
-      let workorder = res.workorders.find(workorder => {
+      const workorder = res.workorders.find(workorder => {
         return workorder._id == this.workorderId;
       });
       this.building = workorder.building;

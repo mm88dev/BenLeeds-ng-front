@@ -13,7 +13,7 @@ export class AdminNavbarComponent implements OnInit {
   ngOnInit() {}
 
   onLogout() {
-    let answer = confirm('Are you sure you want to logout?');
+    const answer = confirm('Are you sure you want to logout?');
     if (answer) {
       this.authService.logout();
     }

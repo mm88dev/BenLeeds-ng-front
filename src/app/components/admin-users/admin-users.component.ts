@@ -61,7 +61,7 @@ export class AdminUsersComponent implements OnInit {
     this.showNewUser = false;
   }
   onSave(name, email, password, regionId) {
-    let answer = confirm(
+    const answer = confirm(
       `Are you sure you want to add new user '${name || ''}'?`
     );
     if (answer) {
@@ -82,7 +82,7 @@ export class AdminUsersComponent implements OnInit {
   }
 
   onDelete(user) {
-    let answer = confirm(
+    const answer = confirm(
       `Are you sure you want to delete user '${user.firstName ||
         ''} ${user.lastName || ''}'?`
     );
@@ -115,12 +115,12 @@ export class AdminUsersComponent implements OnInit {
       });
   }
   onEditSave(user, name, email, password, regionId) {
-    let n = name || user.name;
-    let e = email || user.email;
-    let p = password || user.password;
-    let r = regionId || user.regionId;
+    const n = name || user.name;
+    const e = email || user.email;
+    const p = password || user.password;
+    const r = regionId || user.regionId;
     console.log(user._id, n, e, p, r);
-    let answer = confirm(
+    const answer = confirm(
       `Are you sure you want to edit user '${user.name ||
         ''}'?`
     );

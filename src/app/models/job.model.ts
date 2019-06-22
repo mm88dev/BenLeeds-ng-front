@@ -1,7 +1,7 @@
 export interface Job {
   _id: string;
-  apartment: string,
-  building: string,
+  apartment: string;
+  building: string;
   name: string;
   subcat: string;
   room: string;

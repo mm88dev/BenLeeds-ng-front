@@ -21,8 +21,8 @@ export class ItemsService {
     return this.http.post<{ message: string; item: any }>(
       `${this.url}/${item.id}`,
       {
-        item: item,
-        status: status
+        item,
+        status
       }
     );
   }
@@ -36,10 +36,10 @@ export class ItemsService {
     return this.http.post<{ message: string; item: any }>(
       environment.apiUrl + '/admin/item',
       {
-        name: name,
-        subcat: subcat,
-        room: room,
-        price: price
+        name,
+        subcat,
+        room,
+        price
       }
     );
   }
@@ -48,9 +48,9 @@ export class ItemsService {
     return this.http.post<{ message: string; item: any }>(
       environment.apiUrl + `/admin/item/${id}`,
       {
-        name: name,
-        subcat: subcat,
-        price: price
+        name,
+        subcat,
+        price
       }
     );
   }

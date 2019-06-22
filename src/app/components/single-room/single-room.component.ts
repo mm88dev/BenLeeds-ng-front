@@ -14,7 +14,7 @@ import { Item } from 'src/app/models/item.model';
 export class SingleRoomComponent implements OnInit {
   isLoading = false;
   private enteredRoomId: number;
-  public enteredRoom: Room = {name: "", _id: "", image: ""};
+  public enteredRoom: Room = {name: '', _id: '', image: ''};
   items = [];
 
   public totalItems = 0;
@@ -42,14 +42,14 @@ export class SingleRoomComponent implements OnInit {
   }
   ngOnInit() {
     this.isLoading = true;
-    this.enteredRoomId = this.route.snapshot.params['roomId'];
+    this.enteredRoomId = this.route.snapshot.params.roomId;
     this.roomsService.getRooms().subscribe(res => {
       this.enteredRoom = res.rooms.find(room => {
         return room._id == this.enteredRoomId;
       });
       console.log(this.enteredRoom);
     });
-    
+
     this.itemsService
       .getItems(this.itemsPerPage, this.currentPage)
       .subscribe(res => {
@@ -73,7 +73,7 @@ export class SingleRoomComponent implements OnInit {
         }
       }
     });
-    let submittedItem = this.items.find(item => {
+    const submittedItem = this.items.find(item => {
       return item._id == id;
     });
     this.itemsService

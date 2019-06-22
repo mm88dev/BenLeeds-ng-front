@@ -10,7 +10,7 @@ import { PageEvent } from '@angular/material';
   styleUrls: ['./admin-jobs.component.css']
 })
 export class AdminJobsComponent implements OnInit {
-  public jobs =[];
+  public jobs = [];
   public isLoading = false;
   public totalJobs = 0;
   public jobsPerPage = 5;

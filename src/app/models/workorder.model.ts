@@ -1,5 +1,5 @@
-import { Job } from "./job.model";
-import { User } from "./user.model";
+import { Job } from './job.model';
+import { User } from './user.model';
 export interface Workorder {
   user: User;
   submitDate?: Date;
@@ -7,6 +7,6 @@ export interface Workorder {
   sendDate?: Date;
   buildingNumber: number;
   apartmentNumber: number;
-  jobs  : Job[];
+  jobs: Job[];
   status?: String;
 }

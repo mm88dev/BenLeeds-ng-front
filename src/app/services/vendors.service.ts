@@ -18,10 +18,10 @@ export class VendorsService {
     return this.http.post<{ message: string; vendor: any }>(
       environment.apiUrl + '/vendor',
       {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        category: category
+        firstName,
+        lastName,
+        email,
+        category
       }
     );
   }
@@ -30,10 +30,10 @@ export class VendorsService {
     return this.http.post<{ message: string; vendor: any }>(
       environment.apiUrl + `/vendor/${id}`,
       {
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        category: category
+        firstName,
+        lastName,
+        email,
+        category
       }
     );
   }

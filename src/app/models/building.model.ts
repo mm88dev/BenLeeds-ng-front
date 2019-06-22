@@ -4,5 +4,5 @@ export interface Building {
   regionId?: number;
   number: number;
   adress: string;
-  zip:number
+  zip: number;
 }

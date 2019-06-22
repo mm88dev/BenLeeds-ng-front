@@ -4,5 +4,5 @@ export interface Vendor {
   lastName: string;
   email: string;
   category: string;
-  jobs: object[]
+  jobs: object[];
 }

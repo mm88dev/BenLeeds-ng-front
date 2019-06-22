@@ -34,17 +34,17 @@ export class RoomsHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.workorderId = this.route.snapshot.params['workorderId'];
+    this.workorderId = this.route.snapshot.params.workorderId;
     this.workordersService.getWorkorders().subscribe(res => {
-      let workorder = res.workorders.find(workorder => {
+      const workorder = res.workorders.find(workorder => {
         return workorder._id == this.workorderId;
       });
       this.building = workorder.buildingNumber;
       this.apartment = workorder.apartmentNumber;
       this.submitDate = workorder.submitDate;
     });
-   
-    this.userId = this.route.snapshot.params['userId'];
+
+    this.userId = this.route.snapshot.params.userId;
     this.isLoading = false;
   }
   onHome() {
@@ -53,10 +53,10 @@ export class RoomsHeaderComponent implements OnInit {
 
   onFinish() {
     this.itemsService.getItems().subscribe(res => {
-      let fixingItems = res.items.filter(item => {
+      const fixingItems = res.items.filter(item => {
         return item.status == 'fixing';
       });
-      let ids = [];
+      const ids = [];
       for (let i = 0; i < fixingItems.length; i++) {
         ids.push(fixingItems[i].id);
       }
@@ -71,7 +71,7 @@ export class RoomsHeaderComponent implements OnInit {
     });
   }
   onLogout() {
-    let answer = confirm('Are you sure you want to logout?');
+    const answer = confirm('Are you sure you want to logout?');
     if (answer) {
       this.authService.logout();
     }

@@ -43,7 +43,7 @@ export class AdminItemsComponent implements OnInit {
     this.showTable = true;
   }
   onPostSelect(room) {
-    this.items = [{ room: room }];
+    this.items = [{ room }];
     this.showTable = true;
   }
   onBack() {
@@ -58,19 +58,19 @@ export class AdminItemsComponent implements OnInit {
 
   // Edit Item
   onEdit(name, subcat, price, id) {
-    let answer = confirm(`Are you sure you want to edit "${name}" item?`);
+    const answer = confirm(`Are you sure you want to edit "${name}" item?`);
     if (answer) {
       this.itemsService.editItemAdmin(name, subcat, price, id).subscribe();
       this.showTable = false;
     }
   }
   onDelete(name, room, id) {
-    let answer = confirm(
+    const answer = confirm(
       `Are you sure you want to delete "${name}" item from ${room}?`
     );
     if (answer) {
       this.itemsService.deleteItemAdmin(id).subscribe();
-      this.showTable = false;    
+      this.showTable = false;
     }
   }
 }

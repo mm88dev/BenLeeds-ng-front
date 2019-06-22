@@ -58,7 +58,7 @@ export class AdminVendorsComponent implements OnInit {
     this.isLoading = false;
   }
   onSave(firstName, lastName, email, category) {
-    let answer = confirm(
+    const answer = confirm(
       `Are you sure you want to add new vendor '${firstName || ''} ${lastName ||
         ''}'?`
     );
@@ -80,7 +80,7 @@ export class AdminVendorsComponent implements OnInit {
   }
 
   onDelete(vendor) {
-    let answer = confirm(
+    const answer = confirm(
       `Are you sure you want to delete vendor '${vendor.firstName ||
         ''} ${vendor.lastName || ''}'?`
     );
@@ -113,11 +113,11 @@ export class AdminVendorsComponent implements OnInit {
       });
   }
   onEditSave(vendor, firstName, lastName, email, category) {
-    let f = firstName || vendor.firstName;
-    let l = lastName || vendor.lastName;
-    let e = email || vendor.email;
-    let c = category || vendor.password;
-    let answer = confirm(
+    const f = firstName || vendor.firstName;
+    const l = lastName || vendor.lastName;
+    const e = email || vendor.email;
+    const c = category || vendor.password;
+    const answer = confirm(
       `Are you sure you want to edit vendor '${vendor.firstName ||
         ''} ${vendor.lastName || ''}'?`
     );

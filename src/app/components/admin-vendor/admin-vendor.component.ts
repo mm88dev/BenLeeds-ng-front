@@ -22,7 +22,7 @@ export class AdminVendorComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.vendorId = this.route.snapshot.params['vendorId'];
+    this.vendorId = this.route.snapshot.params.vendorId;
     this.vendorsService.getVendors().subscribe(res => {
       this.vendor = res.vendors.find(v => {
         return v._id == this.vendorId;
@@ -31,6 +31,6 @@ export class AdminVendorComponent implements OnInit {
     });
     this.jobsService.getJobs().subscribe((res) => {
       this.isLoading = false;
-    })
+    });
   }
 }

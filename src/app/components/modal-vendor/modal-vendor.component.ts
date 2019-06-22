@@ -24,8 +24,8 @@ export class ModalVendorComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading = true;
-    this.vendorId = this.route.snapshot.params['vendorId'];
-    this.workorderId = this.route.snapshot.params['workorderId'];
+    this.vendorId = this.route.snapshot.params.vendorId;
+    this.workorderId = this.route.snapshot.params.workorderId;
     if (this.vendorId) {
       this.vendorsService.getVendors().subscribe(res => {
         this.vendor = res.vendors.find(v => {

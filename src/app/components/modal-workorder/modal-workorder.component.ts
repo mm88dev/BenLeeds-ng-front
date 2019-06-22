@@ -25,14 +25,14 @@ export class ModalWorkorderComponent implements OnInit {
       .subscribe(res => {
         console.log(res.workorders);
         this.workorders = res.workorders.filter(workorder => {
-          return workorder.user._id == this.route.snapshot.params['userId'];
+          return workorder.user._id == this.route.snapshot.params.userId;
         });
-        console.log(this.route.snapshot.params['userId']);
+        console.log(this.route.snapshot.params.userId);
         console.log(this.workorders);
       });
     this.usersService.getUsers().subscribe(res => {
       this.user = res.users.find(user => {
-        return user._id == this.route.snapshot.params['userId'];
+        return user._id == this.route.snapshot.params.userId;
       });
       console.log(this.user);
     });

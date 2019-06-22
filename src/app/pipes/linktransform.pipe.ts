@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class LinktransformPipe implements PipeTransform {
   transform(value: string): string {
-    let words = value.split(' ');
+    const words = value.split(' ');
     for (let i = 0; i < words.length; i++) {
       words[i] = words[i].toLowerCase();
     }

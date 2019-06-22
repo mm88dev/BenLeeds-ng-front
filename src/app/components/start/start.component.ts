@@ -26,7 +26,7 @@ export class StartComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userId = this.route.snapshot.params['userId'];
+    this.userId = this.route.snapshot.params.userId;
     this.usersService.getUsers().subscribe(res => {
       this.user = res.users.find(user => {
         return user._id == this.userId;
@@ -40,8 +40,8 @@ export class StartComponent implements OnInit {
   }
 
   onSubmit(building, apartment) {
-    if(!apartment){
-      alert("Please insert apartment number!")
+    if (!apartment) {
+      alert('Please insert apartment number!');
       return;
     }
     this.workordersService
